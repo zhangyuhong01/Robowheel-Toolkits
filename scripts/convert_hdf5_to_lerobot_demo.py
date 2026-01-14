@@ -9,16 +9,12 @@ from PIL import Image
 import numpy as np
 import cv2
 
-
+#TODO:change your task
 TASK_PROMPT="Pick up the fruit and put it on the mat."
 
 def decode_image(dataset, index):
-    """
-    智能读取图像：支持 Raw 数组 和 JPEG 字节流
-    """
     raw_data = dataset[index]
 
-    # --- 情况 A: JPEG 压缩模式 (通常是一维 uint8 数组) ---
     if dataset.ndim == 1 or dataset.dtype.kind == "O":
         if isinstance(raw_data, (bytes, bytearray)):
             raw_data = np.frombuffer(raw_data, dtype=np.uint8)
@@ -27,19 +23,16 @@ def decode_image(dataset, index):
             return None, "Decode Error"
         img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
         return img_rgb, "JPEG Compressed"
-
-    # --- 情况 B: Raw 模式 (T, H, W, C) ---
     if dataset.ndim == 4:
         return raw_data, "Raw Array"
 
-    # --- 情况 C: 异常 ---
     return None, f"Unknown format shape {dataset.shape}"
 
 def main(hdf5_dir: str, *, push_to_hub: bool = False):
     hdf5_dir = Path(hdf5_dir)
     #TODO:change repo name
-    REPO_NAME = "GAOTHU/place_fruit_on_mat_test"
-    HF_LEROBOT_HOME = "/workspace/code/openpi"
+    REPO_NAME = "YOUR_REPO_NAME"
+    HF_LEROBOT_HOME = "YOUR_HF_LEROBOT_HOME"
 
     output_path = Path(HF_LEROBOT_HOME) / REPO_NAME
 
@@ -120,7 +113,7 @@ def main(hdf5_dir: str, *, push_to_hub: bool = False):
     if push_to_hub:
         dataset.push_to_hub(
             repo_id=REPO_NAME, 
-            tags=["place_fruit_on_mat_test", "UR5", "rlds"],
+            tags=["TAG_ONE", "UR5", "rlds"],
             private=False,
             push_videos=True,
             license="apache-2.0",
