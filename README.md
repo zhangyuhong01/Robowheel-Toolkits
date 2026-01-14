@@ -17,7 +17,7 @@ We introduce RoboWheel, a data engine that converts hand–object interaction (H
 
 ## 🧩 Train
 
-### 📝 Train Pi0 with RoboWheel
+### 📝 Train Pi0 with Hora
 
 
 ```bash
