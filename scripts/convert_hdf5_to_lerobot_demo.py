@@ -113,6 +113,7 @@ def main(hdf5_dir: str, *, push_to_hub: bool = False):
     if push_to_hub:
         dataset.push_to_hub(
             repo_id=REPO_NAME, 
+            #TODO:change your tags
             tags=["TAG_ONE", "UR5", "rlds"],
             private=False,
             push_videos=True,
