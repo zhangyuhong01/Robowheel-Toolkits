@@ -7,15 +7,39 @@ import tyro
 import os
 from PIL import Image
 import numpy as np
+import cv2
 
 
 TASK_PROMPT="Pick up the fruit and put it on the mat."
 
+def decode_image(dataset, index):
+    """
+    智能读取图像：支持 Raw 数组 和 JPEG 字节流
+    """
+    raw_data = dataset[index]
+
+    # --- 情况 A: JPEG 压缩模式 (通常是一维 uint8 数组) ---
+    if dataset.ndim == 1 or dataset.dtype.kind == "O":
+        if isinstance(raw_data, (bytes, bytearray)):
+            raw_data = np.frombuffer(raw_data, dtype=np.uint8)
+        img_bgr = cv2.imdecode(raw_data, cv2.IMREAD_COLOR)
+        if img_bgr is None:
+            return None, "Decode Error"
+        img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
+        return img_rgb, "JPEG Compressed"
+
+    # --- 情况 B: Raw 模式 (T, H, W, C) ---
+    if dataset.ndim == 4:
+        return raw_data, "Raw Array"
+
+    # --- 情况 C: 异常 ---
+    return None, f"Unknown format shape {dataset.shape}"
+
 def main(hdf5_dir: str, *, push_to_hub: bool = False):
     hdf5_dir = Path(hdf5_dir)
-    #TODO:REPO_NAME & HF_LEROBOT_HOME 
-    REPO_NAME = "NAME of YOUR REPO"
-    HF_LEROBOT_HOME = "NAME of YOUR HF LEROBOT HOME DIRECTORY"  
+    #TODO:change repo name
+    REPO_NAME = "GAOTHU/place_fruit_on_mat_test"
+    HF_LEROBOT_HOME = "/workspace/code/openpi"
 
     output_path = Path(HF_LEROBOT_HOME) / REPO_NAME
 
@@ -56,44 +80,47 @@ def main(hdf5_dir: str, *, push_to_hub: bool = False):
         with h5py.File(hdf5_file, "r") as f:
 
 
-            #TODO:check keys
-            images = f["data"]['demo_0']['obs']['agentview_rgb'][:]# numpy array
-            wrist_images = f["data"]['demo_0']['obs']['eye_in_hand_rgb'][:]
-            states =f["data"]['demo_0']['obs']['robot0_joint_pos'][:]
-            gripper_states = f["data"]['demo_0']['obs']['robot0_gripper_qpos'][:]
-            actions = f["data"]['demo_0']['actions'][:,:6]
-            gripper_action = f["data"]['demo_0']['actions'][:,6:]
+            for demo_name in f["data"].keys():
+                # import pdb;pdb.set_trace()
+                demo = f["data"][demo_name]
 
-            gripper_states_bin = (~np.all(gripper_states <= 0.001, axis=1)).astype(np.float32)
-            gripper_action_bin = (~np.all(gripper_action <= 0.001, axis=1)).astype(np.float32)
-            states = np.concatenate([states, gripper_states_bin[:, None]], axis=1)
-            actions = np.concatenate([actions, gripper_action_bin[:, None]], axis=1)
-            task = TASK_PROMPT  # or f["task"] #TODO
+                #TODO:check keys
+                images = demo['obs']['agentview_rgb']
+                wrist_images = demo['obs']['eye_in_hand_rgb']
+                states = demo['robot_states'][:]
+                actions = demo['actions_ee'][:].astype(np.float32)
+                actions[:, 6] = (actions[:, 6] >= 0.01).astype(np.float32)
 
-            for i in range(images.shape[0]):
-                img = Image.fromarray(images[i])
-                wrist_img = Image.fromarray(wrist_images[i])
+                task = TASK_PROMPT  # or f["task"] #TODO
 
-                img_resized = img.resize((256, 256), Image.BILINEAR)
-                wrist_resized = wrist_img.resize((256, 256), Image.BILINEAR)
-                img_resized_np = np.array(img_resized)
-                wrist_resized_np = np.array(wrist_resized)
+                for i in range(images.shape[0]):
+                    img_arr, img_format = decode_image(images, i)
+                    wrist_arr, wrist_format = decode_image(wrist_images, i)
+                    if img_arr is None or wrist_arr is None:
+                        raise ValueError(
+                            f"Decode failed at index {i}: image={img_format}, wrist={wrist_format}"
+                        )
+                    img = Image.fromarray(img_arr)
+                    wrist_img = Image.fromarray(wrist_arr)
+                    img_resized = img.resize((256, 256), Image.BILINEAR)
+                    wrist_resized = wrist_img.resize((256, 256), Image.BILINEAR)
+                    img_resized_np = np.array(img_resized)
+                    wrist_resized_np = np.array(wrist_resized)
 
-                dataset.add_frame({
-                    "image": img_resized_np,
-                    "wrist_image": wrist_resized_np,
-                    "state": states[i],
-                    "actions": actions[i],
-                    "task": task if isinstance(task, str) else task.decode(),
-                })
-            
-            dataset.save_episode()
+                    dataset.add_frame({
+                        "image": img_resized_np,
+                        "wrist_image": wrist_resized_np,
+                        "state": states[i],
+                        "actions": actions[i],
+                        "task": task if isinstance(task, str) else task.decode(),
+                    })
+                
+                dataset.save_episode()
 
     if push_to_hub:
         dataset.push_to_hub(
             repo_id=REPO_NAME, 
-            #TODO: customize your dataset card
-            tags=["TAG_one", "UR5", "rlds"],
+            tags=["place_fruit_on_mat_test", "UR5", "rlds"],
             private=False,
             push_videos=True,
             license="apache-2.0",
@@ -102,4 +129,3 @@ def main(hdf5_dir: str, *, push_to_hub: bool = False):
 
 if __name__ == "__main__":
     tyro.cli(main)
-
