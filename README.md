@@ -26,12 +26,12 @@ cd openpi
 ```
 
 
-We provide a script to convert HORA data to the LeRobot format. Download [convert_hdf5_to_lerobot](https://github.com/zhangyuhong01/Robowheel-Toolkits/blob/main/scripts/convert_hdf5_to_lerobot_demo.py) and place it under openpi/blob/main/examples/libero.
+We provide a script to convert HORA data to the LeRobot format. Download [convert_hdf5_to_lerobot_demo](https://github.com/zhangyuhong01/Robowheel-Toolkits/blob/main/scripts/convert_hdf5_to_lerobot_demo.py) and place it under openpi/blob/main/examples/libero.
 
 
 ```python
 cd path_to_openpi
-uv run examples/libero/convert_hdf5_to_lebrobot.py --hdf5_dir path_to_your_hdf5file --push_to_hub
+uv run examples/libero/convert_hdf5_to_lerobot_demo.py --hdf5_dir path_to_your_hdf5file --push_to_hub
 ```
 
 Change your config in `openpi/src/openpi/training/config.py`, for example Pi0 model for LoRA fine-tuning:
