@@ -26,7 +26,7 @@ cd openpi
 ```
 
 
-We provide a script to convert HORA data to the LeRobot format. Download [convert_hdf5_to_lerobot](https://github.com/zhangyuhong01/Robowheel-Toolkits/blob/main/scripts/convert_hdf5_to_lerobot_demo.py)t and place it under openpi/blob/main/examples/libero.
+We provide a script to convert HORA data to the LeRobot format. Download [convert_hdf5_to_lerobot](https://github.com/zhangyuhong01/Robowheel-Toolkits/blob/main/scripts/convert_hdf5_to_lerobot_demo.py) and place it under openpi/blob/main/examples/libero.
 
 
 ```python
