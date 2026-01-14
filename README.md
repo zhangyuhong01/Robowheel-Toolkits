@@ -25,7 +25,9 @@ git clone https://github.com/Physical-Intelligence/openpi.git
 cd openpi
 ```
 
-Here we provide a scripts that convert Hora to Lerobot-format. Download [convert_hdf5_to_lerobot](https://github.com/zhangyuhong01/Robowheel-Toolkits/blob/main/scripts/convert_hdf5_to_lerobot_demo.py) and place it in `openpi/blob/main/examples/libero`.Note:this demo use the 6-joint pos  
+
+We provide a script to convert HORA data to the LeRobot format. Download [convert_hdf5_to_lerobot](https://github.com/zhangyuhong01/Robowheel-Toolkits/blob/main/scripts/convert_hdf5_to_lerobot_demo.py)t and place it under openpi/blob/main/examples/libero.
+
 
 ```python
 cd path_to_openpi
