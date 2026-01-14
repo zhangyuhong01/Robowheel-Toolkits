@@ -62,9 +62,10 @@ TrainConfig(
     ema_decay=None,
 ),
 ```
-
-
-
+```python
+uv run scripts/compute_norm_stats.py --config-name YOUR_CONFIG_NAME
+uv run scripts/train.py YOUR_CONFIG_NAME --exp-name=YOUR_CONFIG_NAME --overwrite
+```
 
 ## 📌 To-Do List
 
