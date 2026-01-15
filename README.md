@@ -4,7 +4,7 @@
 
 💡Equal Contribution, 🌟Corresponding Author  
 
-📄 **[arXiv Paper](https://arxiv.org/abs/2512.02729)**,  🔗  **[Project Page](https://zhangyuhong01.github.io/Robowheel)**
+📄 **[arXiv Paper](https://arxiv.org/abs/2512.02729)**,  🔗  **[Project Page](https://zhangyuhong01.github.io/Robowheel)**  🤗  **[HORA Dataset](https://huggingface.co/datasets/HORA-DB/HORA)**
 
 
 
@@ -15,9 +15,27 @@
 
 We introduce RoboWheel, a data engine that converts hand–object interaction (HOI) videos into training ready supervision for cross-morphology robotic learning. From monocular RGB/RGB-D inputs, we perform high precision HOI reconstruction and enforce physical plausibility via a reinforcement learning (RL) optimizer that refines hand–object relative poses under contact and penetra tion constraints. The reconstructed, contact-rich trajectories are then retargeted to cross-embodiments, robot arms with simple end-effectors, dexterous hands, and humanoids, yielding executable actions and rollouts. To scale coverage, we build a simulation-augmented framework on Isaac Sim, with diverse domain randomization (embodiments, trajectories, object retrieval, background textures, hand motion mirroring), which enriches the distributions of trajectories and observations while preserving spatial relationships and physical plausibility. The entire data pipeline forms an end-to-end pipeline from video → reconstruction → retargeting → augmentation → data acquisition. To our knowledge, this provides the first quantitative evidence that HOI modalities can serve as effective super vision for robotic learning. Compared with teleoperation, RoboWheel is lightweight: a single monocular RGB(D) camera is sufficient to extract a universal, embodiment agnostic motion representation that could be flexibly retargeted across embodiments. We further assemble a large scale multimodal dataset combining multi-camera captures, monocular videos, and public HOI corpora for training and evaluating embodied models.
 
-## 🧩 Train
 
-### 📝 Train Pi0 with Hora
+
+## 📌 To-Do List
+
+Planned or ongoing work items:
+
+- [x] Release part of HORA.
+
+- [ ] Release training code for our baseline models.
+
+  - [x] Update Pi0 training guide (2026-01-14).
+
+  - [ ] Release Pi0 pretrained model 
+
+- [ ] Release the full set of HORA.
+
+
+
+## 🧩 Training models with our data
+
+### Pi0 
 
 
 ```bash
@@ -67,16 +85,15 @@ uv run scripts/compute_norm_stats.py --config-name YOUR_CONFIG_NAME
 uv run scripts/train.py YOUR_CONFIG_NAME --exp-name=YOUR_CONFIG_NAME --overwrite
 ```
 
-## 📌 To-Do List
 
-Planned or ongoing work items:
 
-- [ ] Release part of HORA.
+## 📖 Citation
 
-- [ ] Release training code for our baseline models.
-     - ✅ Update Pi0 training guide (2026-01-14).
-
-- [ ] Release the full set of HORA.
-
-  
-
+```
+@article{zhang2025robowheel,
+  title={RoboWheel: A Data Engine from Real-World Human Demonstrations for Cross-Embodiment Robotic Learning},
+  author={Zhang, Yuhong and Gao, Zihan and Li, Shengpeng and Chen, Ling-Hao and Liu, Kaisheng and Cheng, Runqing and Lin, Xiao and Liu, Junjia and Li, Zhuoheng and Feng, Jingyi and others},
+  journal={arXiv preprint arXiv:2512.02729},
+  year={2025}
+}
+```
