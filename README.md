@@ -27,7 +27,9 @@ Planned or ongoing work items:
 
   - [x] Update Pi0 training guide (2026-01-14).
 
-  - [ ] Release Pi0 pretrained model 
+  - [ ] Release Pi0 pretrained model
+      
+  - [ ] Release other model guide 
 
 - [ ] Release the full set of HORA.
 
