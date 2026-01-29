@@ -25,11 +25,11 @@ Planned or ongoing work items:
 
 - [ ] Release training code for our baseline models.
 
-  - [x] Update Pi0 training guide (2026-01-14).
+  - [x] Update guide for training Pi0(2026-01-14).
 
   - [ ] Release Pi0 pretrained model
       
-  - [ ] Release other model guide 
+  - [ ] Release guides for other models 
 
 - [ ] Release the full set of HORA.
 
