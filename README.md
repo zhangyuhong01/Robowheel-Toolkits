@@ -27,7 +27,7 @@ Planned or ongoing work items:
 
   - [x] Update guide for training Pi0(2026-01-14).
 
-  - [ ] Release Pi0 pretrained model
+  - [ ] Release pretrained Pi0 model
       
   - [ ] Release guides for other models 
 
