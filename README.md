@@ -87,6 +87,26 @@ uv run scripts/compute_norm_stats.py --config-name YOUR_CONFIG_NAME
 uv run scripts/train.py YOUR_CONFIG_NAME --exp-name=YOUR_CONFIG_NAME --overwrite
 ```
 
+## 👀 HORA Dataset Visualization
+
+We provide a toolkit to replay and visualize the HORA dataset using Isaac Sim.
+
+### 1. Prerequisites
+Ensure you have **Isaac Lab** installed. Please follow the official [Isaac Lab Installation Guide](https://isaac-sim.github.io/IsaacLab/main/source/setup/installation/index.html) to set up the environment.
+
+### 2. Install the Toolkit
+Once the simulation environment is ready, install this package in editable mode:
+
+```bash
+pip install -e .
+
+```
+### 3. Run Visualization
+You can visualize the data by running the replay script below. This command will automatically fetch a chunk of data from the HORA dataset for visualization:
+```bash
+python scripts/isaacsim_hora_replay.py
+
+```
 
 
 ## 📖 Citation

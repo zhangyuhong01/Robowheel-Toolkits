@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "robowheel_toolkits"
+version = "0.1.0"
+description = "Replay toolkits for HORA datasets in Isaac Lab"
+readme = "README.md"
+requires-python = ">=3.10"
+
+# Keep dependencies minimal to avoid conflicts with pre-installed Isaac Lab/Torch environments
+dependencies = [
+    "loguru",
+    "h5py",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
