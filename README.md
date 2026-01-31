@@ -22,6 +22,8 @@ We introduce RoboWheel, a data engine that converts hand–object interaction (H
 Planned or ongoing work items:
 
 - [x] Release part of HORA.
+      
+- [x] HORA replay in Issac lab 
 
 - [ ] Release training code for our baseline models.
 
@@ -87,7 +89,7 @@ uv run scripts/compute_norm_stats.py --config-name YOUR_CONFIG_NAME
 uv run scripts/train.py YOUR_CONFIG_NAME --exp-name=YOUR_CONFIG_NAME --overwrite
 ```
 
-## 👀 HORA Dataset Visualization
+## 👀 Using HORA in Issac Lab
 
 We provide a toolkit to replay and visualize the HORA dataset using Isaac Sim.
 
