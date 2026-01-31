@@ -23,7 +23,7 @@ Planned or ongoing work items:
 
 - [x] Release part of HORA.
       
-- [x] HORA replay in Issac lab 
+- [x] HORA replay in Issac lab(2026-01-31)
 
 - [ ] Release training code for our baseline models.
 
