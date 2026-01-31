@@ -23,15 +23,15 @@ Planned or ongoing work items:
 
 - [x] Release part of HORA.
       
-- [x] HORA replay in Issac lab(2026-01-31)
+- [x] HORA replay in Issac lab(2026-01-31).
 
 - [ ] Release training code for our baseline models.
 
   - [x] Update guide for training Pi0(2026-01-14).
 
-  - [ ] Release pretrained Pi0 model
+  - [ ] Release pretrained Pi0 model.
       
-  - [ ] Release guides for other models 
+  - [ ] Release guides for other models. 
 
 - [ ] Release the full set of HORA.
 
