@@ -19,3 +19,4 @@ output/
 *.h5
 *.hdf5
 assets/src/Visualizing_touch/manopth/
+src/Visualizing_touch/mano_v1_2/
