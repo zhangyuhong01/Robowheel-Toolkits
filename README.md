@@ -111,6 +111,44 @@ python scripts/isaacsim_hora_replay.py
 ```
 
 
+## 👆 Visualizing Touch Data
+
+We provide a toolkit to visualize tactile pressure data from the HORA dataset, supporting frame selection, coordinate transformation, pressure calculation, Gaussian pressure distribution, and Open3D 3D visualization.
+
+### 1. Prerequisites
+
+```bash
+cd src/Visualizing_touch
+conda env create -f environment.yml
+conda activate visualizing_touch
+```
+
+### 2. Configure Data Paths
+
+Edit `src/Visualizing_touch/view_tactile_tool/config.py` to set:
+- `DEFAULT_HDF5_PATH`: path to your tactile HDF5 file (e.g. `data/hdf5/100017/episode_*.hdf5`)
+- `DEFAULT_OBJ_PATH`: path to the object OBJ model (e.g. `data/obj/obj_100017/*.obj`)
+
+Download sample data from 🤗 [HORA Dataset](https://huggingface.co/datasets/HORA-DB/HORA) and place it under `src/Visualizing_touch/data/`.
+
+### 3. Run Visualization
+
+```bash
+cd src/Visualizing_touch
+
+# Open frame selection UI, press ENTER to run full pipeline
+python view_tactile_tool.py
+
+# Or run specific sub-commands
+python view_tactile_tool.py test_open3d          # Open3D pressure visualization
+python view_tactile_tool.py --frame N test_open3d # Visualize frame N
+python view_tactile_tool.py select_frames         # Frame selection only
+```
+
+For more details, see [`src/Visualizing_touch/README.md`](src/Visualizing_touch/README.md).
+
+---
+
 ## 📖 Citation
 
 ```

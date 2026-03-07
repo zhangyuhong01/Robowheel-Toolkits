@@ -1,0 +1,21 @@
+# 触觉可视化工具 - Conda 环境
+# 使用: conda env create -f environment.yml
+name: visualizing_touch
+
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.9
+  - numpy
+  - scipy
+  - h5py
+  - opencv
+  - matplotlib
+  - pytorch
+  - open3d
+  - pip
+  - pip:
+    - # 若需 manopth 可选: git+https://github.com/hassony2/chumpy.git
