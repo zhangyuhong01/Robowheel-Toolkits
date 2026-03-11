@@ -1,40 +1,40 @@
-# 触觉可视化工具 (Visualizing Touch)
+# Visualizing Touch
 
-基于 HDF5 触觉数据与 OBJ 物体模型的触觉投影与压力可视化工具：选帧、坐标系变换、压力计算、高斯压力分布与 Open3D 可视化。
+A toolkit for tactile projection and pressure visualization based on HDF5 tactile data and OBJ object meshes: frame selection, coordinate transformation, pressure computation, Gaussian pressure distribution, and Open3D visualization.
 
 ---
 
-## 一、环境准备（Conda）
+## 1. Environment Setup (Conda)
 
-### 1. 安装 Miniconda / Anaconda
+### 1. Install Miniconda / Anaconda
 
-若尚未安装 Conda，请先安装其一：
+If you have not installed Conda yet, please install one of the following:
 
-- **Miniconda**（推荐，体积小）：<https://docs.conda.io/en/latest/miniconda.html>
-- **Anaconda**：<https://www.anaconda.com/download>
+- **Miniconda** (recommended, lightweight): <https://docs.conda.io/en/latest/miniconda.html>
+- **Anaconda**: <https://www.anaconda.com/download>
 
-安装后重启终端，确认可用：
+After installation, restart your terminal and verify:
 
 ```bash
 conda --version
 ```
 
-### 2. 创建并激活环境
+### 2. Create and Activate Environment
 
-在项目根目录下执行：
+In the project root directory, run:
 
 ```bash
-# 进入项目目录
+# Go to project directory
 cd e:\data\pipeline\Visualizing_touch
 
-# 使用 environment.yml 创建环境
+# Create environment from environment.yml
 conda env create -f environment.yml
 
-# 激活环境
+# Activate environment
 conda activate visualizing_touch
 ```
 
-若已存在同名环境，可先删除再创建：
+If an environment with the same name already exists, remove it first:
 
 ```bash
 conda env remove -n visualizing_touch
@@ -42,62 +42,62 @@ conda env create -f environment.yml
 conda activate visualizing_touch
 ```
 
-### 3. 可选：手动安装依赖
+### 3. Optional: Install Dependencies Manually
 
-若不用 `environment.yml`，可手动创建环境并安装包：
+If you do not want to use `environment.yml`, you can create the environment and install packages manually:
 
 ```bash
 conda create -n visualizing_touch python=3.9 -y
 conda activate visualizing_touch
 
-# 核心依赖（建议用 conda 安装 PyTorch 与 Open3D）
+# Core dependencies (recommend installing PyTorch and Open3D via conda)
 conda install numpy scipy h5py opencv matplotlib pytorch open3d -c pytorch -c conda-forge -y
 ```
 
-### 4. 可选：视频解码（ffmpeg）
+### 4. Optional: Video Decoding (ffmpeg)
 
-若需要从 HDF5 中解码相机视频（如 `read_tactile` 中的 h265 解码），请安装 **ffmpeg** 并加入 PATH：
+If you need to decode camera videos from HDF5 (e.g., h265 decoding in `read_tactile`), please install **ffmpeg** and add it to PATH:
 
-- Windows：<https://ffmpeg.org/download.html> 或 `winget install ffmpeg`
-- 安装后终端执行 `ffmpeg -version` 确认可用。
-
----
-
-## 二、配置与数据
-
-- **默认路径**在 `view_tactile_tool/config.py` 中配置：
-  - `DEFAULT_HDF5_PATH`：触觉 HDF5 文件（如 `data/hdf5/100017/episode_*.hdf5`）
-  - `DEFAULT_OBJ_PATH`：物体 OBJ 模型（如 `data/obj/obj_100017/baishikele.obj`）
-  - `MANO_ASSETS_ROOT`：MANO 资源目录（默认 `mano_v1_2`）
-- 将你的 HDF5 与 OBJ 放到对应目录，或直接修改上述路径。
+- Windows: <https://ffmpeg.org/download.html> or `winget install ffmpeg`
+- After installation, run `ffmpeg -version` in the terminal to verify.
 
 ---
 
-## 三、运行方式
+## 2. Configuration and Data
 
-在**已激活**的 conda 环境下，在项目根目录执行：
+- **Default paths** are configured in `view_tactile_tool/config.py`:
+  - `DEFAULT_HDF5_PATH`: tactile HDF5 files (e.g. `data/hdf5/100017/episode_*.hdf5`)
+  - `DEFAULT_OBJ_PATH`: object OBJ meshes (e.g. `data/obj/obj_100017/baishikele.obj`)
+  - `MANO_ASSETS_ROOT`: MANO asset directory (default `mano_v1_2`)
+- Put your HDF5 and OBJ files into the corresponding directories, or directly modify these paths.
 
-### 主入口（选帧 + 完整 pipeline）
+---
+
+## 3. How to Run
+
+With the Conda environment **activated**, run the following commands in the project root:
+
+### Main Entry (Frame Selection + Full Pipeline)
 
 ```bash
-# 打开选帧界面，选帧后按 ENTER 可运行完整 pipeline
+# Open the frame selection UI; after picking frames, press ENTER to run the full pipeline
 python view_tactile_tool.py
-# 或
+# or
 python -m view_tactile_tool
 ```
 
-### 子命令
+### Subcommands
 
-| 命令 | 说明 |
-|------|------|
-| `python view_tactile_tool.py select_frames` | 仅做可视化选帧并保存 |
-| `python view_tactile_tool.py test_transform` | 坐标系变换测试 |
-| `python view_tactile_tool.py test_pressure` | 压力计算测试 |
-| `python view_tactile_tool.py test_gaussian` | 高斯压力分布测试 |
-| `python view_tactile_tool.py test_open3d` | Open3D 压力可视化 |
-| `python view_tactile_tool.py --frame N test_open3d` | 指定帧号 N 的 Open3D 可视化 |
+| Command | Description |
+|--------|-------------|
+| `python view_tactile_tool.py select_frames` | Only visualize and select frames, then save results |
+| `python view_tactile_tool.py test_transform` | Test coordinate transformations |
+| `python view_tactile_tool.py test_pressure` | Test pressure computation |
+| `python view_tactile_tool.py test_gaussian` | Test Gaussian pressure distribution |
+| `python view_tactile_tool.py test_open3d` | Test Open3D pressure visualization |
+| `python view_tactile_tool.py --frame N test_open3d` | Visualize Open3D pressure for frame N |
 
-兼容入口（与上面等价）：
+Compatible entry points (equivalent to the above):
 
 ```bash
 python proj_point_to_obj.py
@@ -105,66 +105,88 @@ python proj_point_to_obj.py select_frames
 # ...
 ```
 
-### 选帧操作说明
+### Frame Selection Controls
 
-- **← / →**：切换帧  
-- **空格**：选中/取消当前帧  
-- **Enter**：确认并保存选中帧（可选继续跑 pipeline）  
-- **ESC**：取消  
+- **← / →**: switch frames  
+- **Space**: select / deselect current frame  
+- **Enter**: confirm and save selected frames (optionally continue to run the pipeline)  
+- **ESC**: cancel  
 
-选帧结果会保存到 `output/selected_frames.txt` 和 `output/selected_frames.json`。
+Selected frames are saved to `output/selected_frames.txt` and `output/selected_frames.json`.
 
 ---
 
-## 四、项目结构概览
+## 4. Visualization Examples
+
+Frame selection and tactile overlay:
+
+<p>
+  <img src="images/PixPin_2026-03-11_15-47-39.png" alt="Frame selection UI" width="45%">
+  <img src="images/PixPin_2026-03-11_15-31-51.png" alt="Projected tactile overlay" width="45%">
+</p>
+
+Pressure cloud visualization:
+
+<p>
+  <img src="images/PixPin_2026-03-11_15-00-55.png" alt="Open3D pressure view 1" width="45%">
+  <img src="images/PixPin_2026-03-11_15-10-50.png" alt="Open3D pressure view 2" width="45%">
+</p>
+
+<p>
+  <img src="images/PixPin_2026-03-11_15-17-53.png" alt="Open3D pressure view 3" width="45%">
+</p>
+
+---
+
+## 5. Project Structure Overview
 
 ```
 Visualizing_touch/
-├── environment.yml       # Conda 环境定义
-├── README.md             # 本说明
-├── view_tactile_tool.py  # 主入口
-├── proj_point_to_obj.py  # 兼容入口
-├── read_tactile.py       # HDF5 触觉数据加载与解码
-├── view_tactile_tool/    # 触觉可视化包
-│   ├── config.py         # 路径与全局配置
-│   ├── frame_selection.py # 选帧界面与 pipeline 串联
-│   ├── transform.py      # 坐标系变换
-│   ├── pressure.py       # 压力计算
-│   ├── gaussian.py       # 高斯压力分布
-│   ├── open3d_viz.py     # Open3D 压力可视化
+├── environment.yml       # Conda environment definition
+├── README.md             # This document
+├── view_tactile_tool.py  # Main entry
+├── proj_point_to_obj.py  # Compatible entry
+├── read_tactile.py       # HDF5 tactile data loading & decoding
+├── view_tactile_tool/    # Tactile visualization package
+│   ├── config.py         # Paths and global configuration
+│   ├── frame_selection.py # Frame selection UI & pipeline orchestration
+│   ├── transform.py      # Coordinate transformations
+│   ├── pressure.py       # Pressure computation
+│   ├── gaussian.py       # Gaussian pressure distribution
+│   ├── open3d_viz.py     # Open3D pressure visualization
 │   └── ...
 ├── data/
-│   ├── hdf5/             # HDF5 触觉数据
-│   ├── obj/              # OBJ 物体模型
-│   └── video/            # 解码后的视频（可选）
-├── output/               # 选帧结果与输出图
-├── mano_v1_2/            # MANO 手部模型资源
-├── manopth/              # MANO PyTorch 层（可选）
-└── manotorch/            # MANO PyTorch 工具（可选）
+│   ├── hdf5/             # HDF5 tactile data
+│   ├── obj/              # OBJ object meshes
+│   └── video/            # Decoded videos (optional)
+├── output/               # Selected frames and output figures
+├── mano_v1_2/            # MANO hand model assets
+├── manopth/              # MANO PyTorch layers (optional)
+└── manotorch/            # MANO PyTorch utilities (optional)
 ```
 
 ---
 
-## 五、常见问题
+## 6. FAQ
 
-- **Windows 下选帧界面按钮无反应**：入口脚本已设置 `matplotlib.use("TkAgg")`，若仍有问题请确认已安装 Tk（Conda 默认带 Tk）。
-- **找不到 HDF5 或 OBJ**：检查 `view_tactile_tool/config.py` 中的 `DEFAULT_HDF5_PATH`、`DEFAULT_OBJ_PATH` 是否指向实际文件。
-- **视频解码报错**：确认已安装 ffmpeg 且在 PATH 中；若不需要解码视频可忽略。
-- **MANO / 手部相关报错**：当前主流程针对 exoskeleton 手部数据；MANO 数据需额外配置，见 `data/hdf5/mano_tactile.md`。
+- **Frame selection UI not responding on Windows**: The entry script already sets `matplotlib.use("TkAgg")`. If issues persist, please make sure Tk is installed (Conda usually includes Tk by default).
+- **HDF5 or OBJ not found**: Check `DEFAULT_HDF5_PATH` and `DEFAULT_OBJ_PATH` in `view_tactile_tool/config.py` and ensure they point to existing files.
+- **Video decoding errors**: Make sure ffmpeg is installed and in PATH. If you do not need video decoding, you can ignore related errors.
+- **MANO / hand-related errors**: The main pipeline currently targets exoskeleton hand data. MANO data requires additional configuration; see `data/hdf5/mano_tactile.md`.
 
 ---
 
-## 六、依赖摘要
+## 7. Dependency Summary
 
-| 依赖 | 用途 |
-|------|------|
-| Python 3.9 | 运行环境 |
-| numpy, scipy | 数值与几何计算 |
-| h5py | HDF5 读写 |
-| opencv | 图像/视频处理 |
-| matplotlib | 选帧界面与绘图 |
-| pytorch | 触觉数据处理（read_tactile 等） |
-| open3d | 压力云图 3D 可视化 |
-| ffmpeg（可选） | 相机视频解码 |
+| Dependency | Purpose |
+|-----------|---------|
+| Python 3.9 | Runtime environment |
+| numpy, scipy | Numerical and geometric computation |
+| h5py | HDF5 I/O |
+| opencv | Image / video processing |
+| matplotlib | Frame selection UI and plotting |
+| pytorch | Tactile data processing (`read_tactile`, etc.) |
+| open3d | 3D visualization of pressure clouds |
+| ffmpeg (optional) | Camera video decoding |
 
-环境创建完成后，从「二、配置与数据」和「三、运行方式」按需修改路径并运行即可。
+After the environment is created, start from **“Configuration and Data”** and **“How to Run”**, adjust the paths if necessary, and you should be ready to go.
