@@ -134,6 +134,7 @@ Pressure cloud visualization:
 
 <p>
   <img src="images/PixPin_2026-03-11_15-17-53.png" alt="Open3D pressure view 3" width="45%">
+  <img src="images/PixPin_2026-03-11_16-12-16.png" alt="Open3D pressure view 3" width="45%">
 </p>
 
 ---
