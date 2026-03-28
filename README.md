@@ -25,6 +25,8 @@ Planned or ongoing work items:
       
 - [x] HORA replay in Issac lab(2026-01-31).
 
+- [x] Release Tactile Data and analysis toolkits(2026-03-15).
+
 - [ ] Release training code for our baseline models.
 
   - [x] Update guide for training Pi0(2026-01-14).
